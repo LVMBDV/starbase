@@ -18,5 +18,8 @@ module Starbase
     #
     # config.time_zone = "Central Time (US & Canada)"
     # config.eager_load_paths << Rails.root.join("extras")
+    config.action_mailer.raise_delivery_errors = true
+    config.action_mailer.default_url_options = { :host => "star.base" }
+    config.email_confirmation_expires_in = 1.day # TODO make a recurring job to clean out expired unconfirmed accounts
   end
 end

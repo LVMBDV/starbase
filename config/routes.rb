@@ -4,5 +4,6 @@ Rails.application.routes.draw do
   end
   post "/graphql", to: "graphql#execute"
   root :to => "application#index"
+  match "/confirm_email", to: "application#index", via: [:get, :post], as: :confirm_email
   match "*path", to: "application#index", format: false, via: :get
 end
