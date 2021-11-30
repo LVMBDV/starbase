@@ -5,4 +5,9 @@ class UserMailer < ApplicationMailer
     @user.email_confirmation_sent_at = Time.now
     @user.save!
   end
+
+  def reset_password
+    @user = params[:user]
+    mail(to: @user.email_address, subject: "Reset your password") # TODO localize subject
+  end
 end

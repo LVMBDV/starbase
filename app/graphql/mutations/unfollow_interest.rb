@@ -1,21 +1,24 @@
 module Mutations
-  class FollowInterest < BaseMutation
+  class UnfollowInterest < BaseMutation
     include AuthenticationHelpers
 
     argument :interest_id, ID, required: true
     argument :interest_kind, Types::InterestKind, required: true
 
-    field :interest, Types::InterestType, null: true
     field :errors, [String], null: false
 
     def resolve(interest_id:, interest_kind:)
       unless current_user.present?
-        { interest: nil, errors: ["You must be signed in to follow an interest"] }
+        { errors: ["You must be signed in to follow an interest"] }
       else
         interest = Types::InterestKind.model_class(interest_kind).find(interest_id)
-        interest.followers << current_user
-        interest.save!
-        { interest: interest, errors: [] }
+        follow = Follow.find_by(interest: interest, user: current_user)
+        if follow.present?
+          follow.destroy
+          { errors: [] }
+        else
+          { errors: ["You are not following this interest"] }
+        end
       end
     end
   end

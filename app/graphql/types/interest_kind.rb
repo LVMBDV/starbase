@@ -3,13 +3,14 @@ module Types
     value "MOVIE"
     value "GENRE"
     value "STAR"
+    def self.model_class(value)
+
+      {
+        "MOVIE" => Movie,
+        "GENRE" => Genre,
+        "STAR" => Star
+      }[value]
+    end
   end
 
-  def model_class
-    {
-      "MOVIE" => Movie,
-      "GENRE" => Genre,
-      "STAR" => Star
-    }[self.value]
-  end
 end
