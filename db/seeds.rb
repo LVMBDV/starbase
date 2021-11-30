@@ -16,9 +16,18 @@ movies_by_imdb_id = {}
 progress_bar = ProgressBar.create(:title => "Creating movies")
 CSV.foreach(File.join(__dir__, "imdb_dataset", "movies.csv"), headers: true).with_index do |row, index|
   begin
-    genres = row["genre"].split(",").map { |genre_title| Genre.find_or_create_by(title: genre_title) }
-    movie = Movie.create(original_title: row["original_title"], release_date: Date.parse(row["date_published"]), genres: genres)
+    genres = row["genre"].split(",").map do |genre_title|
+      genre = Genre.find_or_initialize_by(title: genre_title.strip)
+      genre.description = Faker::Lorem.sentence if genre.description.blank?
+      genre.save!
+      genre
+    end
+
+    description = row["description"].strip
+    description = Faker::Lorem.paragraph if description.blank?
+
     progress_bar.progress = (index + 1) * 100 / 5000
+    movie = Movie.create!(original_title: row["original_title"], description: description, release_date: Date.parse(row["date_published"]), genres: genres)
     movies_by_imdb_id[row["imdb_title_id"]] = movie.id
   rescue
     # life is too short to clean other people's data
@@ -32,7 +41,9 @@ stars_by_imdb_id = {}
 
 progress_bar = ProgressBar.create(:title => "Creating stars")
 CSV.foreach(File.join(__dir__, "imdb_dataset", "names.csv"), headers: true).with_index do |row, index|
-  star = Star.create(full_name: row["name"])
+  bio = row["bio"].try(&:strip)
+  bio = Faker::Lorem.paragraph if bio.blank?
+  star = Star.create(full_name: row["name"], biography: bio)
   progress_bar.progress = (index + 1) * 100 / 5000
   stars_by_imdb_id[row["imdb_name_id"]] = star.id
 end
