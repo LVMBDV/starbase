@@ -58,13 +58,4 @@ gem 'graphiql-rails', group: :development
 gem 'progressbar'
 gem 'jwt'
 gem 'faker'
-
-group :development do
-  # Use sqlite3 as the database for Active Record
-  gem 'sqlite3', '~> 1.4'
-end
-
-# heroku hates sqlite3
-group :production do
-  gem 'pg'
-end
+gem 'pg'

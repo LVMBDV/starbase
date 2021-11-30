@@ -31,7 +31,7 @@ module Types
 
     def search_movies(query:)
       # I didn't want to waste too much time on this as it wasn't even in the requirements
-      Movie.where("original_title LIKE ?", "%#{query}%")
+      Movie.where("original_title ILIKE ?", "%#{query}%")
     end
 
     field :genre, Types::GenreType, null: false do
@@ -53,8 +53,10 @@ module Types
     end
 
     def search_genre(query:)
-      Genre.where("title LIKE ?", "%#{query}%").first
+      Genre.where("title ILIKE ?", "%#{query}%").first
     end
+
+    Genre.where("title ILIKE %biography%")
 
     field :star, Types::StarType, null: false do
       argument :id, ID, required: true
@@ -70,7 +72,7 @@ module Types
 
     def search_stars(name: nil)
       if name.present?
-        Star.where("full_name LIKE ?", "%#{name}%").limit(12)
+        Star.where("full_name ILIKE ?", "%#{name}%").limit(12)
       else
         Star.first(12)
       end
