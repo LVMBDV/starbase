@@ -5,6 +5,9 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
+    <script>
+      window.isProduction = <%= Rails.env.production? %>;
+    </script>
     <%= stylesheet_pack_tag 'application', media: 'all' %>
     <%= javascript_pack_tag 'application' %>
   </head>

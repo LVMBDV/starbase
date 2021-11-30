@@ -14,7 +14,7 @@ Vue.use(VueApollo)
 Vue.use(Buefy)
 
 const apolloClient = new ApolloClient({
-  uri: 'http://localhost:3000/graphql',
+  uri: isProduction ? 'https://f4881080e5.herokuapp.com/graphql' : 'http://localhost:3000/graphql',
   fetchOptions: {
     credentials: 'same-origin',
   },
