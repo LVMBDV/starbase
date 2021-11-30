@@ -1,22 +1,20 @@
 <template>
-  <div id="app">
-    <p>{{ message }}</p>
+  <div>
+    <Navbar></Navbar>
+    <main class="p-4">
+      <router-view></router-view>
+    </main>
   </div>
 </template>
 
 <script>
+import gql from 'graphql-tag'
+
+import Navbar from './components/Navbar.vue'
+
 export default {
-  data: function () {
-    return {
-      message: "Hello Vue!"
-    }
-  }
+  components: {
+    Navbar
+  },
 }
 </script>
-
-<style scoped>
-p {
-  font-size: 2em;
-  text-align: center;
-}
-</style>
