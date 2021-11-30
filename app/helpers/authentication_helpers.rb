@@ -12,7 +12,7 @@ module AuthenticationHelpers
 
   def jwt_cookie
     cookie = cookies[JWT_COOKIE_KEY]
-    JWT.decode(cookie, Rails.application.secrets.secret_key_base, true, { algorithm: "HS256" }).first if cookie.present?
+    JWT.decode(cookie, Rails.application.secret_key_base, true, { algorithm: "HS256" }).first if cookie.present?
   end
 
   def current_user
@@ -21,7 +21,7 @@ module AuthenticationHelpers
 
   def sign_in_as(user)
     cookies[JWT_COOKIE_KEY] = {
-      value: JWT.encode({ user_id: user.id, signed_in_at: Time.now }, Rails.application.secrets.secret_key_base, "HS256"),
+      value: JWT.encode({ user_id: user.id, signed_in_at: Time.now }, Rails.application.secret_key_base, "HS256"),
       same_site: :lax
     }
   end
