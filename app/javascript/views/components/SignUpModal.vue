@@ -14,6 +14,7 @@
         </b-field>
       </section>
       <footer class="modal-card-foot is-justify-content-flex-end">
+        <p class="is-size-7 mr-6">By signing up, you agree to hire Ata :^)</p>
         <b-button :disabled="!isValid" :loading="signingUp" @click="signUp">Sign Up</b-button>
       </footer>
     </div>
