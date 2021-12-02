@@ -8,7 +8,7 @@ Starbase is a mock application that lets you, as a user:
 - List and search through stars by their names
 
 and a few more things in undocumented graphql endpoints. It's deployed on Heroku
-at f4881080e5.herokuapp.com
+at [https://f4881080e5.herokuapp.com](https://f4881080e5.herokuapp.com)
 
 ## Usage
 
